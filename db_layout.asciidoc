@@ -1,0 +1,447 @@
+Structure of database
+=====================
+
+The database is a relative database and contains several tables. each table can have many columns. The data resides in the rows of the tables.
+
+== Overview
+
+The main table is the "microcontroller" table. This table has one row for each component. It maps an id to the component name. Only very simple (linear) properties of the chip are in this table.
+
+.For each (more complex) property of a microcontroller the database has two tables.
+* the property table lists all possible variations of this property and maps them to IDs. The name of all property tables starts with "p_"
+* the property lookup table has two columns. The "dev_id" and the "property_id". The combination of "dev_id" and "property_id" is unique()Primary key). But one "dev_id" may be matched to multiple "property_id" (in multiple rows). The name of all property lookup tables start with "pl_"
+
+
+== Tables
+
+=== Devices
+
+Currently we only have microcontrollers as devices. In the future we might add FPGA,...
+
+==== microcontroller
+
+Each row represents a micro controller chip.
+[options="header",cols="<,^,<,^,^"]
+|===================================================================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | name of the MCU | "STM32F407VGT6" | identify MCU
+| CPU_clock_max_MHz | float | maximim possible clock rate of the CPU in MHz | 48.0 |
+| Flash_size_kB | int | number of kB flash that is contained in the package | 32 |
+| RAM_size_kB | int | number of kB RAM that is contained in the package | 32 |
+| Supply_Voltage_min_V | float | minimum voltage that must be supplied for the CPU to be able to operate (in V) | 2.4 |
+| Supply_Voltage_max_V | float | maximum voltage that can be supplied to the CPU to be able to operate(in V) | 5.2 |
+| Operating_Temperature_min_degC | float | minimum temperature in that the CPU is able to operate (in degree Celsius) | -40.0 |
+| Operating_Temperature_max_degC | float | minimum temperature in that the CPU is able to operate (in degree Celsius) | 85.0 |
+| svd_id | int | id of the device that has the information for SVD file creation for this chip | 1 | reference
+| Addressable_unit_bit | int | 8 means byte adressable | 8 | SVD
+| bus_width_bit | int | number of bits send similtaniously on the bus | 32 | SVD
+| description | text | textual description of chip | "STM32F407" | SVD
+|===================================================================================================================================
+
+primary key is "id".
+
+
+=== Architecture
+
+The architecture of the microcontrolelr. Can be AVR, ARM. MIPS,...
+
+==== p_architecture
+
+Each row represents a CPU architecture.
+[options="header",cols="<,^,<,^,^"]
+|==============================================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | name of the architecture | "AVR" | show name of architecture
+| alternative | int | refere to an alternative name for the architecture | 1 | refernce
+| svd_name | string | name used in cpu tag | CM0PLUS | <cpu><name>CM0PLUS</name></cpu>
+| revision | string | revision of the core | r0p0 | cpu tag
+| endian | string | endianness of the core (big, little, selectable, other) | little | cpu tag
+| hasMPU | Boolean | the core has a Memory Protection Unit | true | cpu tag
+| hasFPU | Boolean | the core has a Floating Point Unit | true | cpu tag
+| interrupt_prio_bits | int | number of relevant bits to define Interrupt priorities | 4 | cpu tag
+| ARM_Vendor_systick | Bollean | true = vendor specific systick, false = ARM defined systick | true | cpu tag
+|==============================================================================================================
+
+
+primary key is "id".
+
+==== pl_architecture
+
+[options="header",cols="<,^,<,^,^"]
+|================================================================================
+| name of column | data type | description | example content | intended use
+| dev_id | int | identify the microcontroller | 2 | foreign_id(Microcontroller)
+| arch_id | int | identify the architecture | 5 | foreign_id(p_Architecture)
+|================================================================================
+
+primary key is "dev_id" and "arch_id".
+
+
+=== Market state
+
+The availability of the device on the market. Can we buy it right away, is it obsolete,...
+
+==== p_market_state
+
+Each row represents a type of availability on the market.
+
+[options="header",cols="<,^,<,^,^"]
+|==============================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | name of the state | "obsolete" | current state this chip has in the market.
+|==============================================================================================
+
+primary key is "id".
+
+==== pl_market_state
+
+[options="header",cols="<,^,<,^,^"]
+|====================================================================================
+| name of column | data type | description | example content | intended use
+| dev_id | int | identify the microcontroller | 2 | foreign_id(Microcontroller)
+| market_state_id | int | identify the market state | 5 | foreign_id(p_MarketState)
+|====================================================================================
+
+primary key is "dev_id" and "marketstate_id".
+
+
+=== Package
+
+The stuff around the silicon.
+
+==== p_package
+
+Each row represents a housing for a chip.
+
+[options="header",cols="<,^,<,^,^"]
+|==============================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | name of the package | "LQFP" | define the enclosure that the chip comes in.
+|==============================================================================================
+
+primary key is "id".
+
+==== pl_package
+
+[options="header",cols="<,^,<,^,^"]
+|================================================================================
+| name of column | data type | description | example content | intended use
+| dev_id | int | identify the microcontroller | 2 | foreign_id(Microcontroller)
+| packet_id | int | identify the package | 5 | foreign_id(p_Package)
+|================================================================================
+
+primary key is "dev_id" and "packet_id".
+
+
+=== Vendor
+
+Informations regarding the company that produces the chips.
+
+==== p_vendor
+
+Each row represents a company that creates chips.
+
+[options="header",cols="<,^,<,^,^"]
+|======================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | name of the vendor | "NXP" | name of company that produces the chip
+| alternative | int | this is an alternative name for the vendor | 3 | reference
+|======================================================================================
+
+primary key is "id".
+
+==== pl_vendor
+
+[options="header",cols="<,^,<,^,^"]
+|================================================================================
+| name of column | data type | description | example content | intended use
+| dev_id | int | identify the microcontroller | 2 | foreign_id(Microcontroller)
+| vendor_id | int | identify the vendor | 5 | foreign_id(p_vendor)
+|================================================================================
+
+primary key is "dev_id" and "vendor_id".
+
+
+=== User
+
+The users of this database. All the accounts.
+
+==== p_user
+
+Each row represents a user account to this database.
+
+[options="header",cols="<,^,<,^,^"]
+|============================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | name of the user | "Hans" |
+|============================================================================
+
+primary key is "id".
+
+==== pl_user
+
+[options="header",cols="<,^,<,^,^"]
+|=================================================================================
+| name of column | data type | description | example content | intended use
+| dev_id | int | identify the microcontroller | 2 | foreign_id(Microcontroller)
+| user_id | int | identify the user that edited the chip | 5 | foreign_id(p_user)
+|=================================================================================
+
+primary key is "dev_id" and "user_id".
+
+
+=== Peripheral Intsnace
+
+Chips may have the same peripherral more than once. That would then be several instances of the same peripheral.
+
+==== p_peripheral_instance
+
+Each row represents an instance of a peripheral in a chip.
+
+[options="header",cols="<,^,<,^,^"]
+|=======================================================================================================================================================================================================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | name of the peripheral instance | "UART1" |
+| description | string | explanation what this instance is | "Universal Asynchronous Receiver Transmitter 1" |
+| base_Address | int | lowest address of Registers for this peripheral instance | 0x400C 0400 |
+| peripheral_id | int | identify the peripheral of this instance | 1 | ID
+| disable_Condition | string | Define a C-language compliant logical expression returning a TRUE or FALSE result. If TRUE, refreshing the display for this peripheral is disabled and related accesses by the debugger are suppressed. | "!(DCB->DSCSR & (1 << 16))" |
+|=======================================================================================================================================================================================================================================================================
+
+
+primary key is "id".
+
+==== pl_peripheral_instance
+[options="header",cols="<,^,<,^,^"]
+|==================================================================================================================
+| name of column | data type | description | example content | intended use
+| dev_id | int | identify the micro controller | 2 | foreign_id(Microcontroller)
+| per_in_id | int | identify the peripheral instance available on the chip | 5 | foreign_id(p_peripheral_instance)
+|==================================================================================================================
+
+
+primary key is "dev_id" and "per_in_id".
+
+
+=== Interrupts
+
+Some Peripherals create interrupts.
+
+==== p_interrupt
+
+Each row represents an interrupt vector.
+
+[options="header",cols="<,^,<,^,^"]
+|============================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | name of the interrupt | "UART1_TX" |
+| description | string | describing of the interrupt | "UART1" |
+| number | int | interrupt number | 5 |
+|============================================================================
+
+primary key is "id".
+
+==== pl_interrupt
+
+[options="header",cols="<,^,<,^,^"]
+|=============================================================================================
+| name of column | data type | description | example content | intended use
+| per_in_id | int | identify the peripheral instance | 2 | foreign_id(p_peripheral_instance)
+| irq_id | int | identify interrupt | 5 | foreign_id(p_interrupt)
+|=============================================================================================
+
+primary key is "per_in_id" and "irq_id".
+
+
+=== Peripheral
+
+Linkes the peripheral Instances to the peripheral Registers.
+
+==== p_peripheral
+
+Each row represents a peripheral of some chip.
+
+[options="header",cols="<,^,<,^,^"]
+|========================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| group_name | string | group similar peripherals together | "Timer" | group peripherals
+|========================================================================================
+
+
+primary key is "id".
+
+
+=== Address Block
+
+A defined Memory area.
+
+==== p_address_block
+
+Each row represents an address block.
+
+[options="header",cols="<,^,<,^,^"]
+|========================================================================================================================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| offset | int | offset from base address | 0x0 |
+| size | int | size in number of microcontroller.Addressable_unit_bit(usually Bytes) | 0x40 |
+| mem_usage | string | registers, buffer, or reserved. | 'registers' |
+| protection | string | "s" - secure permission required for access, "n" - non-secure or secure permission required for access, "p" - privileged permission required for access | 'n' |
+|========================================================================================================================================================================================
+
+primary key is "id".
+
+==== pl_address_block
+
+[options="header",cols="<,^,<,^,^"]
+|===========================================================================
+| name of column | data type | description | example content | intended use
+| per_id | int | identify the peripheral | 2 | foreign_id(p_peripheral)
+| addr_id | int | identify address block | 5 | foreign_id(p_address_block)
+|===========================================================================
+
+primary key is "per_id" and "addr_id".
+
+
+=== Register
+
+A special Function Register.
+
+==== p_register
+
+Each row represents an register.
+
+[options="header",cols="<,^,<,^,^"]
+|======================================================================================================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | Name of the Register | "CR" |
+| display_name | string | Name of the Register | "CR" |
+| description | string | explain what it is good for | "control register" |
+| address_offset | int | Offset from base address of peripheral | 0x04 |
+| size | int | size in bit | x020 |
+| access | string | defines access rights | "read-write" |
+| reset_value | string | value after reset | 0x80000000 |
+| alternate_register | string | a different name for the same bits | "CCMR" | indicate that mapping this register to the same address is not a mistake
+| reset_Mask | string | Identify register bits that have a defined reset value. | 0x12345678 |
+|read_action | string | clear, set, modify, modifyExternal as according to SVD | "modifyExternal" | if it has a value then the debugger should not read the register
+| modified_write_values | string | oneToClear, oneToSet, oneToToggle, zeroToClear, zeroToSet, zeroToToggle, clear, set, modify as according to SVD | "oneToClear" |
+| data_type | string | C style definition of intended register usage | "uint32_t *" |
+|======================================================================================================================================================================
+
+primary key is "id".
+
+==== pl_register
+
+[options="header",cols="<,^,<,^,^"]
+|============================================================================
+| name of column | data type | description | example content | intended use
+| per_id | int | identify the peripheral | 2 | foreign_id(p_peripheral)
+| reg_id | int | identify register | 5 | foreign_id(p_register)
+|============================================================================
+
+primary key is "per_id" and "reg_id".
+
+
+=== Fields
+
+A collection of bits in a Function Register. Basically a vaiable of one to 32 bit in size holding some information.
+
+==== p_field
+
+Each row represents a field.
+
+[options="header",cols="<,^,<,^,^"]
+|=====================================================================================================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | Name of the field | "ENABLE" |
+| description | string | explain what it is good for | "DCMI enable" |
+| bit_offset | int | Offset from start of the register | 5 |
+| size_bit | int | size in bit | 4 |
+| access | string | defines access rights | "read-write" |
+| modified_write_values | string | oneToClear, oneToSet, oneToToggle, zeroToClear, zeroToSet, zeroToToggle, clear, set, modify as according to SVD | "oneToSet" |
+| read_action | string | clear, set, modify, modifyExternal as according to SVD | “modifyExternal” | if it has a value then the debugger should not read the register
+| reset_value | int | value after reset | 0x80000000 |
+|=====================================================================================================================================================================
+
+primary key is "id".
+
+==== pl_field
+
+[options="header",cols="<,^,<,^,^"]
+|===========================================================================
+| name of column | data type | description | example content | intended use
+| reg_id | int | identify register | 5 | foreign_id(p_register)
+| field_id | int | identify the field | 2 | foreign_id(p_field)
+|===========================================================================
+
+primary key is "field_id" and "reg_id".
+
+
+=== Enumeration
+
+A named enum as definition for a field.
+
+==== p_enumeration
+
+Each row represents a enumeration.
+
+[options="header",cols="<,^,<,^,^"]
+|============================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | Name of the enumeration | "TimerIntSelect" |
+| usage_right | string | defines access rights | "read-write" |
+|============================================================================
+
+primary key is "id".
+
+==== pl_enumeration
+
+[options="header",cols="<,^,<,^,^"]
+|============================================================================
+| name of column | data type | description | example content | intended use
+| field_id | int | identify the field | 2 | foreign_id(p_field)
+| enum_id | int | identify the enumeration | 5 | foreign_id(p_enumeration)
+|============================================================================
+
+primary key is "field_id" and "enum_id".
+
+
+==== p_enumeration_element
+
+Each row represents a enumeration value.
+
+[options="header",cols="<,^,<,^,^"]
+|=======================================================================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | Name of the enumeration value | "disabled" |
+| description | string | definition of what this means | "The clock source clk0 is turned off." |
+| value | string | value representing this element("#0x" means the first bit is 1 and the second bit don't care) | 15 |
+|=======================================================================================================================
+
+primary key is "id".
+
+==== pl_enumeration_element
+
+[options="header",cols="<,^,<,^,^"]
+|==============================================================================================
+| name of column | data type | description | example content | intended use
+| enum_id | int | identify the enumeration | 2 | foreign_id(p_enumeration)
+| value_id | int | identify the enumeration element | 5 | foreign_id(p_enumeration_element)
+|==============================================================================================
+
+primary key is "enum_id" and "value_id".
+
+
