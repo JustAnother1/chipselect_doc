@@ -1,0 +1,466 @@
+-- MySQL dump 10.16  Distrib 10.1.48-MariaDB, for debian-linux-gnu (x86_64)
+--
+-- Host: 192.168.80.10    Database: microcontrollis
+-- ------------------------------------------------------
+-- Server version	10.6.5-MariaDB-1:10.6.5+maria~focal
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `microcontrollis`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `microcontrollis` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+
+USE `microcontrollis`;
+
+--
+-- Table structure for table `microcontroller`
+--
+
+DROP TABLE IF EXISTS `microcontroller`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `microcontroller` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `CPU_clock_max_MHz` float DEFAULT NULL,
+  `Flash_size_kB` int(11) DEFAULT NULL,
+  `RAM_size_kB` int(11) DEFAULT NULL,
+  `Supply_Voltage_min_V` float DEFAULT NULL,
+  `Supply_Voltage_max_V` float DEFAULT NULL,
+  `Operating_Temperature_min_degC` float DEFAULT NULL,
+  `Operating_Temperature_max_degC` float DEFAULT NULL,
+  `svd_id` int(11) DEFAULT NULL,
+  `Addressable_unit_bit` int(11) DEFAULT NULL,
+  `bus_width_bit` int(11) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`(768))
+) ENGINE=InnoDB AUTO_INCREMENT=6540 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_address_block`
+--
+
+DROP TABLE IF EXISTS `p_address_block`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_address_block` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `address_offset` int(11) DEFAULT NULL,
+  `size` bigint(20) DEFAULT NULL,
+  `mem_usage` text DEFAULT NULL,
+  `protection` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3940 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_architecture`
+--
+
+DROP TABLE IF EXISTS `p_architecture`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_architecture` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text DEFAULT NULL,
+  `alternative` int(11) NOT NULL DEFAULT 0,
+  `svd_name` text DEFAULT NULL,
+  `revision` text DEFAULT NULL,
+  `endian` text DEFAULT NULL,
+  `hasMPU` tinyint(1) DEFAULT NULL,
+  `hasFPU` tinyint(1) DEFAULT NULL,
+  `interrupt_prio_bits` int(11) DEFAULT NULL,
+  `ARM_Vendor_systick` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_enumeration`
+--
+
+DROP TABLE IF EXISTS `p_enumeration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_enumeration` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text DEFAULT NULL,
+  `usage_right` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2903035 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_enumeration_element`
+--
+
+DROP TABLE IF EXISTS `p_enumeration_element`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_enumeration_element` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `value` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13077624 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_field`
+--
+
+DROP TABLE IF EXISTS `p_field`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_field` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `bit_offset` int(11) DEFAULT NULL,
+  `size_bit` int(11) DEFAULT NULL,
+  `access` text DEFAULT NULL,
+  `modified_write_values` text DEFAULT NULL,
+  `read_action` text DEFAULT NULL,
+  `reset_value` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13020560 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_interrupt`
+--
+
+DROP TABLE IF EXISTS `p_interrupt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_interrupt` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `description` text DEFAULT NULL,
+  `number` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10625 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_market_state`
+--
+
+DROP TABLE IF EXISTS `p_market_state`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_market_state` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_package`
+--
+
+DROP TABLE IF EXISTS `p_package`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_package` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=327 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_peripheral`
+--
+
+DROP TABLE IF EXISTS `p_peripheral`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_peripheral` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_name` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=92621 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_peripheral_instance`
+--
+
+DROP TABLE IF EXISTS `p_peripheral_instance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_peripheral_instance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `base_address` text NOT NULL,
+  `peripheral_id` int(11) DEFAULT NULL,
+  `disable_Condition` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=116768 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_register`
+--
+
+DROP TABLE IF EXISTS `p_register`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_register` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text DEFAULT NULL,
+  `display_name` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `address_offset` bigint(20) DEFAULT NULL,
+  `size` int(11) DEFAULT NULL,
+  `access` text DEFAULT NULL,
+  `reset_value` text DEFAULT NULL,
+  `alternate_register` text DEFAULT NULL,
+  `reset_Mask` text DEFAULT NULL,
+  `read_action` text DEFAULT NULL,
+  `modified_write_values` text DEFAULT NULL,
+  `data_type` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2876032 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_user`
+--
+
+DROP TABLE IF EXISTS `p_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `p_vendor`
+--
+
+DROP TABLE IF EXISTS `p_vendor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_vendor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `alternative` int(11) NOT NULL DEFAULT 0,
+  `url` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`(768))
+) ENGINE=InnoDB AUTO_INCREMENT=303 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_address_block`
+--
+
+DROP TABLE IF EXISTS `pl_address_block`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_address_block` (
+  `per_id` int(11) NOT NULL,
+  `addr_id` int(11) NOT NULL,
+  PRIMARY KEY (`per_id`,`addr_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_architecture`
+--
+
+DROP TABLE IF EXISTS `pl_architecture`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_architecture` (
+  `dev_id` int(11) NOT NULL,
+  `arch_id` int(11) NOT NULL,
+  PRIMARY KEY (`dev_id`,`arch_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_enumeration`
+--
+
+DROP TABLE IF EXISTS `pl_enumeration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_enumeration` (
+  `field_id` int(11) NOT NULL,
+  `enum_id` int(11) NOT NULL,
+  PRIMARY KEY (`field_id`,`enum_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_enumeration_element`
+--
+
+DROP TABLE IF EXISTS `pl_enumeration_element`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_enumeration_element` (
+  `enum_id` int(11) NOT NULL,
+  `value_id` int(11) NOT NULL,
+  PRIMARY KEY (`enum_id`,`value_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_field`
+--
+
+DROP TABLE IF EXISTS `pl_field`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_field` (
+  `reg_id` int(11) NOT NULL,
+  `field_id` int(11) NOT NULL,
+  PRIMARY KEY (`reg_id`,`field_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_interrupt`
+--
+
+DROP TABLE IF EXISTS `pl_interrupt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_interrupt` (
+  `per_in_id` int(11) NOT NULL,
+  `irq_id` int(11) NOT NULL,
+  PRIMARY KEY (`per_in_id`,`irq_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_market_state`
+--
+
+DROP TABLE IF EXISTS `pl_market_state`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_market_state` (
+  `dev_id` int(11) NOT NULL,
+  `market_state_id` int(11) NOT NULL,
+  PRIMARY KEY (`dev_id`,`market_state_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_package`
+--
+
+DROP TABLE IF EXISTS `pl_package`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_package` (
+  `dev_id` int(11) NOT NULL,
+  `package_id` int(11) NOT NULL,
+  PRIMARY KEY (`dev_id`,`package_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_peripheral_instance`
+--
+
+DROP TABLE IF EXISTS `pl_peripheral_instance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_peripheral_instance` (
+  `dev_id` int(11) NOT NULL,
+  `per_in_id` int(11) NOT NULL,
+  PRIMARY KEY (`dev_id`,`per_in_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_register`
+--
+
+DROP TABLE IF EXISTS `pl_register`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_register` (
+  `per_id` int(11) NOT NULL,
+  `reg_id` int(11) NOT NULL,
+  PRIMARY KEY (`per_id`,`reg_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_register_cluster`
+--
+
+DROP TABLE IF EXISTS `pl_register_cluster`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_register_cluster` (
+  `cluster_id` int(11) NOT NULL,
+  `reg_id` int(11) NOT NULL,
+  PRIMARY KEY (`cluster_id`,`reg_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_user`
+--
+
+DROP TABLE IF EXISTS `pl_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_user` (
+  `dev_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`dev_id`,`user_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pl_vendor`
+--
+
+DROP TABLE IF EXISTS `pl_vendor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pl_vendor` (
+  `dev_id` int(11) NOT NULL,
+  `vendor_id` int(11) NOT NULL,
+  PRIMARY KEY (`dev_id`,`vendor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-12-17 11:30:41

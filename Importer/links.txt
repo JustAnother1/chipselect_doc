@@ -1,0 +1,17 @@
+
+click on "Export" to download Spreadcheet from ST:
+ https://www.st.com/en/microcontrollers-microprocessors/stm32-high-performance-mcus.html#products
+https://www.st.com/en/microcontrollers-microprocessors/stm32-mainstream-mcus.html#products
+https://www.st.com/en/microcontrollers-microprocessors/stm32-ultra-low-power-mcus.html#products
+
+
+click on "Download Chart":
+https://www.microchip.com/en-us/parametric-search.html/980
+
+click on "download XLS"
+https://www.nxp.com/products/product-selector:PRODUCT-SELECTOR#/category/c731_c1770_c173
+
+SVD on Github:
+
+https://github.com/lkolbly/cmsis-svd.git
+https://github.com/posborne/cmsis-svd.git

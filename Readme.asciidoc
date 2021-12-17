@@ -1,0 +1,8 @@
+= Documentation of ChipSelect
+
+read more about ChipSelect here: https://chipselect.org/about.php
+
+Started from this discussion:
+https://www.mikrocontroller.net/topic/495863
+
+

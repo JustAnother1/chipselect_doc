@@ -1,0 +1,7 @@
+Bezüglich der Liste der vom J-Link Unterstützten Devices:
+
+Diese finden Sie bei uns im Web: https://www.segger.com/supported-devices/jlink
+Dort mittlerweile mit Suche nach Device Name und Device Familie.
+
+Außerdem können Sie die Liste aus dem J-Link Commander via "ExpDevList" und
+"ExpDevListXML" exportieren.
