@@ -1,8 +1,37 @@
 = Documentation of ChipSelect
 
+== Interfaces
+Chipselect provides the information on the following interfaces:
+
+=== Web
+You can use the "Chips by Vendor" and "Chips by Feature" pages to get the information you need.
+
+=== SVD download
+For all Chips SVD files can be directly downloaded. They are available at http://chipselect.org/<vendor name>--<device name>.svd<br />
+Example: http://chipselect.org/STMicroelectronics--STM32F407.svd
+
+=== REST API
+The REST API is available at http://chipselect.org/rest/
+
+Ressources are:
+
+vendor
+Modes: GET
+Filter: id, name
+
+Example: http://chipselect.org/rest/vendor?name=STMicroelectronics
+
+
+microcontroller
+Modes: GET
+Filter: id, name, limit, left_off_id
+Example: http://chipselect.org/rest/microcontroller?limit=5&left_off_id=100
+
+
+== Links
 read more about ChipSelect here: https://chipselect.org/about.php
 
-Started from this discussion:
+Chipselect was started from this discussion:
 https://www.mikrocontroller.net/topic/495863
 
 

@@ -37,6 +37,10 @@ Each row represents a micro controller chip.
 | Addressable_unit_bit | int | 8 means byte adressable | 8 | SVD
 | bus_width_bit | int | number of bits send similtaniously on the bus | 32 | SVD
 | description | text | textual description of chip | "STM32F407" | SVD
+| architecture_id | int | id of architecture in p_architecture | 1 | reference
+| market_state_id | int | id of market state in p_market_state | 1 | reference
+| package_id | int | id of package in p_package| 1 | reference
+| vendor_id | int | id of vendor in p_vendor | 1 | reference
 |===================================================================================================================================
 
 primary key is "id".
@@ -67,18 +71,6 @@ Each row represents a CPU architecture.
 
 primary key is "id".
 
-==== pl_architecture
-
-[options="header",cols="<,^,<,^,^"]
-|================================================================================
-| name of column | data type | description | example content | intended use
-| dev_id | int | identify the microcontroller | 2 | foreign_id(Microcontroller)
-| arch_id | int | identify the architecture | 5 | foreign_id(p_Architecture)
-|================================================================================
-
-primary key is "dev_id" and "arch_id".
-
-
 === Market state
 
 The availability of the device on the market. Can we buy it right away, is it obsolete,...
@@ -96,18 +88,6 @@ Each row represents a type of availability on the market.
 
 primary key is "id".
 
-==== pl_market_state
-
-[options="header",cols="<,^,<,^,^"]
-|====================================================================================
-| name of column | data type | description | example content | intended use
-| dev_id | int | identify the microcontroller | 2 | foreign_id(Microcontroller)
-| market_state_id | int | identify the market state | 5 | foreign_id(p_MarketState)
-|====================================================================================
-
-primary key is "dev_id" and "marketstate_id".
-
-
 === Package
 
 The stuff around the silicon.
@@ -124,18 +104,6 @@ Each row represents a housing for a chip.
 |==============================================================================================
 
 primary key is "id".
-
-==== pl_package
-
-[options="header",cols="<,^,<,^,^"]
-|================================================================================
-| name of column | data type | description | example content | intended use
-| dev_id | int | identify the microcontroller | 2 | foreign_id(Microcontroller)
-| packet_id | int | identify the package | 5 | foreign_id(p_Package)
-|================================================================================
-
-primary key is "dev_id" and "packet_id".
-
 
 === Vendor
 
@@ -155,50 +123,10 @@ Each row represents a company that creates chips.
 
 primary key is "id".
 
-==== pl_vendor
 
-[options="header",cols="<,^,<,^,^"]
-|================================================================================
-| name of column | data type | description | example content | intended use
-| dev_id | int | identify the microcontroller | 2 | foreign_id(Microcontroller)
-| vendor_id | int | identify the vendor | 5 | foreign_id(p_vendor)
-|================================================================================
+=== Peripheral Instance
 
-primary key is "dev_id" and "vendor_id".
-
-
-=== User
-
-The users of this database. All the accounts.
-
-==== p_user
-
-Each row represents a user account to this database.
-
-[options="header",cols="<,^,<,^,^"]
-|============================================================================
-| name of column | data type | description | example content | intended use
-| id | int | identify the row | 1 | ID
-| name | string | name of the user | "Hans" |
-|============================================================================
-
-primary key is "id".
-
-==== pl_user
-
-[options="header",cols="<,^,<,^,^"]
-|=================================================================================
-| name of column | data type | description | example content | intended use
-| dev_id | int | identify the microcontroller | 2 | foreign_id(Microcontroller)
-| user_id | int | identify the user that edited the chip | 5 | foreign_id(p_user)
-|=================================================================================
-
-primary key is "dev_id" and "user_id".
-
-
-=== Peripheral Intsnace
-
-Chips may have the same peripherral more than once. That would then be several instances of the same peripheral.
+Chips may have the same peripheral more than once. That would then be several instances of the same peripheral.
 
 ==== p_peripheral_instance
 
@@ -263,7 +191,7 @@ primary key is "per_in_id" and "irq_id".
 
 === Peripheral
 
-Linkes the peripheral Instances to the peripheral Registers.
+Links the peripheral Instances to the peripheral Registers.
 
 ==== p_peripheral
 
@@ -282,7 +210,7 @@ primary key is "id".
 
 === Address Block
 
-A defined Memory area.
+A defined Memory area that belongs to a peripheral.
 
 ==== p_address_block
 
@@ -314,7 +242,7 @@ primary key is "per_id" and "addr_id".
 
 === Register
 
-A special Function Register.
+A special Function Register. Peripherals can have Registers.
 
 ==== p_register
 
@@ -354,7 +282,7 @@ primary key is "per_id" and "reg_id".
 
 === Fields
 
-A collection of bits in a Function Register. Basically a vaiable of one to 32 bit in size holding some information.
+A collection of bits in a Function Register. Basically a variable of one to 32 bit in size holding some information. Registers can have one or more fields.
 
 ==== p_field
 
@@ -390,7 +318,7 @@ primary key is "field_id" and "reg_id".
 
 === Enumeration
 
-A named enum as definition for a field.
+A named enum as definition for a field. A field can have an enumeration.
 
 ==== p_enumeration
 
@@ -420,7 +348,7 @@ primary key is "field_id" and "enum_id".
 
 ==== p_enumeration_element
 
-Each row represents a enumeration value.
+Each row represents a enumeration value. An enumeration can have one or more elements.
 
 [options="header",cols="<,^,<,^,^"]
 |=======================================================================================================================
@@ -444,4 +372,48 @@ primary key is "id".
 
 primary key is "enum_id" and "value_id".
 
+=== User
+
+The users of this database. All user accounts.
+
+==== p_user
+
+Each row represents a user account to this database.
+
+[options="header",cols="<,^,<,^,^"]
+|============================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| name | string | name of the user | "Hans" |
+| password | string | name of the user | "$2y$......." |
+| full_name | string | name of the user | "Hans Dampf" |
+| email | string | name of the user | "Hans@Dampf.local" |
+| roles | string | name of the user | "admin, user" |
+|============================================================================
+
+primary key is "id".
+
+=== Change log
+
+record all changes to the database. This should help find issues with import scripts.
+
+==== p_log
+Each row represents a data change to this database.
+
+[options="header",cols="<,^,<,^,^"]
+|============================================================================
+| name of column | data type | description | example content | intended use
+| id | int | identify the row | 1 | ID
+| action | string | Insert new entry, update entry, delete entry | "INSERT" |
+| on_table | string | the database table used | "p_vendor" |
+| on_id | string | the row of the table used | 45 |
+| on_column | string | the column that got changed | "name" |
+| old_value | string | value before change | "Atmel" |
+| new_value | string | value after change | "Microchip" |
+| user | string | name of the user that did the change | "Hans" |
+| time_of_change | string | time the change happened | "2022-01-05 21:45:23" |
+| accepted_by | string | name of the user with "admin" role that checked the change | "Uwe" |
+|============================================================================
+
+primary key is "id".
 
