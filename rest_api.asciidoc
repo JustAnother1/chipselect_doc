@@ -1,0 +1,210 @@
+= REST API
+:toc:
+
+The REST API is available at http://chipselect.org/rest/<ressource>
+
+== Modes
+
+The GET mode is available on all resources for everybody. All other modes(POST, PUT, DELETE) are only available to logged in users.
+The DELETE mode is only available to users that have the delete role.
+
+== Resources are
+
+=== address_block
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| per_id
+
+|Example
+| http://chipselect.org/rest/address_block?per_id=42
+
+|====
+
+=== architecture
+
+[cols="1,1"]
+|===
+| modes
+| GET, POST, PUT, DELETE
+
+| filter
+| id, name, svd_name
+
+|Example
+| http://chipselect.org/rest/vendor?name=STMicroelectronics
+
+|====
+
+=== enumeration_element
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| enum_id
+
+|Example
+| http://chipselect.org/rest/enumeration_element?enum_id=42
+
+|====
+
+=== enumeration
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| field_id
+
+|Example
+| http://chipselect.org/rest/enumeration?field_id=42
+
+|====
+
+=== field
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| reg_id
+
+|Example
+| http://chipselect.org/rest/field?reg_id=42
+
+|====
+
+=== interrupt
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| per_id, per_in_id
+
+|Example
+| http://chipselect.org/rest/interrupt?per_in_id=42
+
+|====
+
+=== market_state
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| id, name
+
+|Example
+| http://chipselect.org/rest/market_state?id=42
+
+|====
+
+=== microcontroller
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| id, name, limit, left_off_id
+
+| Example
+| http://chipselect.org/rest/microcontroller?limit=5&left_off_id=100
+
+|===
+
+=== package
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| id, name
+
+|Example
+| http://chipselect.org/rest/package?id=42
+
+|====
+
+=== peripheral_instance
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| dev_id
+
+|Example
+| http://chipselect.org/rest/peripheral_instance?dev_id=42
+
+|====
+
+=== peripheral
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| id, group_name
+
+|Example
+| http://chipselect.org/rest/peripheral?id=42
+
+|====
+
+
+=== register
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| per_id
+
+|Example
+| http://chipselect.org/rest/register?per_id=42
+
+|====
+
+=== vendor
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| id, name
+
+|Example
+| http://chipselect.org/rest/vendor?name=STMicroelectronics
+
+|====
+
+
+

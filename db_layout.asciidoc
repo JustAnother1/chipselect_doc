@@ -1,5 +1,5 @@
-Structure of database
-=====================
+= Structure of database
+:toc:
 
 The database is a relative database and contains several tables. each table can have many columns. The data resides in the rows of the tables.
 
@@ -7,12 +7,26 @@ The database is a relative database and contains several tables. each table can 
 
 The main table is the "microcontroller" table. This table has one row for each component. It maps an id to the component name. Only very simple (linear) properties of the chip are in this table.
 
-.For each (more complex) property of a microcontroller the database has two tables.
+.For each (more complex) property of a microcontroller the database has one or two tables.
 * the property table lists all possible variations of this property and maps them to IDs. The name of all property tables starts with "p_"
 * the property lookup table has two columns. The "dev_id" and the "property_id". The combination of "dev_id" and "property_id" is unique()Primary key). But one "dev_id" may be matched to multiple "property_id" (in multiple rows). The name of all property lookup tables start with "pl_"
 
+== Connections between tables
+
+In this sector the "relations" of the relative database are defined.
+
+Therefore we look at a single chip. and trace the data that describes that chip throughout the database.
+
+The start for each chip is the chips data row in the microcontroller table.
+The id column gives a unique id to this device. If several chips of the same family are in the database, that only differ in the values in the microcontroller table (different flash sizes,..) then the peripheral information is only available once and is linked using the id that is stored in the svd_id column. If the device is not part of a family then the svd_id is NULL.
+The architecture_id column specifies the architecture of the chip by referring to the id in the p_architecture table.
+The market_state_id column specifies the market state of the chip by referring to the id in the p_market_state table.
+The package_id column specifies the package that the chip comes in by referring to the id in the p_package table.
+The vendor_id column specifies the vendor that produces the chip by referring to the id in the p_vendor table.
 
 == Tables
+
+The complete structure is available as link:db_structure.sql[mysql dump]
 
 === Devices
 
@@ -21,6 +35,8 @@ Currently we only have microcontrollers as devices. In the future we might add F
 ==== microcontroller
 
 Each row represents a micro controller chip.
+
+.the microcontroller table
 [options="header",cols="<,^,<,^,^"]
 |===================================================================================================================================
 | name of column | data type | description | example content | intended use
