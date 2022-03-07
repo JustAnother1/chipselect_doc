@@ -308,10 +308,10 @@ Each row represents an register.
 | address_offset | int | Offset from base address of peripheral | 0x04 |
 | size | int | size in bit | x020 |
 | access | string | defines access rights | "read-write" |
-| reset_value | string | value after reset | 0x80000000 |
+| reset_value | Descimal(21) | value after reset | 0x80000000 |
 | alternate_register | string | a different name for the same bits | "CCMR" | indicate that mapping this register to the same address is not a mistake
-| reset_Mask | string | Identify register bits that have a defined reset value. | 0x12345678 |
-|read_action | string | clear, set, modify, modifyExternal as according to SVD | "modifyExternal" | if it has a value then the debugger should not read the register
+| reset_Mask | Descimal(21) | Identify register bits that have a defined reset value. | 0x12345678 |
+| read_action | string | clear, set, modify, modifyExternal as according to SVD | "modifyExternal" | if it has a value then the debugger should not read the register
 | modified_write_values | string | oneToClear, oneToSet, oneToToggle, zeroToClear, zeroToSet, zeroToToggle, clear, set, modify as according to SVD | "oneToClear" |
 | data_type | string | C style definition of intended register usage | "uint32_t *" |
 |======================================================================================================================================================================
