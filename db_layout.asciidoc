@@ -188,7 +188,7 @@ Each row represents an instance of a peripheral in a chip.
 | id | int | identify the row | 1 | ID
 | name | string | name of the peripheral instance | "UART1" |
 | description | string | explanation what this instance is | "Universal Asynchronous Receiver Transmitter 1" |
-| base_Address | int | lowest address of Registers for this peripheral instance | 0x400C 0400 |
+| base_Address | Descimal(21) | lowest address of Registers for this peripheral instance | 0x400C 0400 |
 | peripheral_id | int | identify the peripheral of this instance | 1 | ID
 | disable_Condition | string | Define a C-language compliant logical expression returning a TRUE or FALSE result. If TRUE, refreshing the display for this peripheral is disabled and related accesses by the debugger are suppressed. | "!(DCB->DSCSR & (1 << 16))" |
 |=======================================================================================================================================================================================================================================================================
