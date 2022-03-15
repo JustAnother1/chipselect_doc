@@ -407,6 +407,7 @@ Each row represents a enumeration value. An enumeration can have one or more ele
 | name | string | Name of the enumeration value | "disabled" |
 | description | string | definition of what this means | "The clock source clk0 is turned off." |
 | value | string | value representing this element("#0x" means the first bit is 1 and the second bit don't care) | 15 |
+| isDefault | bool | this entry also describes all values missing (0 = false; 1= true) | 0 |
 |=======================================================================================================================
 
 primary key is "id".
