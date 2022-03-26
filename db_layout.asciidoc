@@ -349,7 +349,6 @@ Each row represents a field.
 | access | string | defines access rights | "read-write" |
 | modified_write_values | string | oneToClear, oneToSet, oneToToggle, zeroToClear, zeroToSet, zeroToToggle, clear, set, modify as according to SVD | "oneToSet" |
 | read_action | string | clear, set, modify, modifyExternal as according to SVD | “modifyExternal” | if it has a value then the debugger should not read the register
-| reset_value | string | value after reset | "0x80000000" |
 |=====================================================================================================================================================================
 
 primary key is "id".
