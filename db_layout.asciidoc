@@ -188,7 +188,7 @@ Each row represents an instance of a peripheral in a chip.
 | id | int | identify the row | 1 | ID
 | name | string | name of the peripheral instance | "UART1" |
 | description | string | explanation what this instance is | "Universal Asynchronous Receiver Transmitter 1" |
-| base_Address | Descimal(21) | lowest address of Registers for this peripheral instance | 0x400C 0400 |
+| base_Address | string | lowest address of Registers for this peripheral instance | 0x400C 0400 |
 | peripheral_id | int | identify the peripheral of this instance | 1 | ID
 | disable_Condition | string | Define a C-language compliant logical expression returning a TRUE or FALSE result. If TRUE, refreshing the display for this peripheral is disabled and related accesses by the debugger are suppressed. | "!(DCB->DSCSR & (1 << 16))" |
 |=======================================================================================================================================================================================================================================================================
@@ -270,8 +270,8 @@ Each row represents an address block.
 |========================================================================================================================================================================================
 | name of column | data type | description | example content | intended use
 | id | int | identify the row | 1 | ID
-| offset | int | offset from base address | 0x0 |
-| size | int | size in number of microcontroller.Addressable_unit_bit(usually Bytes) | 0x40 |
+| address_offset | string | offset from base address | "0x0" |
+| size | string | size in number of microcontroller.Addressable_unit_bit(usually Bytes) | "0x40" |
 | mem_usage | string | registers, buffer, or reserved. | 'registers' |
 | protection | string | "s" - secure permission required for access, "n" - non-secure or secure permission required for access, "p" - privileged permission required for access | 'n' |
 |========================================================================================================================================================================================
@@ -305,12 +305,12 @@ Each row represents an register.
 | name | string | Name of the Register | "CR" |
 | display_name | string | Name of the Register | "CR" |
 | description | string | explain what it is good for | "control register" |
-| address_offset | int | Offset from base address of peripheral | 0x04 |
-| size | int | size in bit | x020 |
+| address_offset | string | Offset from base address of peripheral | "0x04" |
+| size | int | size in bit | 32 |
 | access | string | defines access rights | "read-write" |
-| reset_value | Descimal(21) | value after reset | 0x80000000 |
+| reset_value | string | value after reset | "0x80000000" |
 | alternate_register | string | a different name for the same bits | "CCMR" | indicate that mapping this register to the same address is not a mistake
-| reset_Mask | Descimal(21) | Identify register bits that have a defined reset value. | 0x12345678 |
+| reset_Mask | string | Identify register bits that have a defined reset value. | "0x12345678" |
 | read_action | string | clear, set, modify, modifyExternal as according to SVD | "modifyExternal" | if it has a value then the debugger should not read the register
 | modified_write_values | string | oneToClear, oneToSet, oneToToggle, zeroToClear, zeroToSet, zeroToToggle, clear, set, modify as according to SVD | "oneToClear" |
 | data_type | string | C style definition of intended register usage | "uint32_t *" |
@@ -349,7 +349,7 @@ Each row represents a field.
 | access | string | defines access rights | "read-write" |
 | modified_write_values | string | oneToClear, oneToSet, oneToToggle, zeroToClear, zeroToSet, zeroToToggle, clear, set, modify as according to SVD | "oneToSet" |
 | read_action | string | clear, set, modify, modifyExternal as according to SVD | “modifyExternal” | if it has a value then the debugger should not read the register
-| reset_value | int | value after reset | 0x80000000 |
+| reset_value | string | value after reset | "0x80000000" |
 |=====================================================================================================================================================================
 
 primary key is "id".
