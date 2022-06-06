@@ -44,7 +44,7 @@ The chips also have peripherals. A peripheral is a part of the chip that has log
 
 As each chip can have #multiple peripherals# a lookup table is used. The table *pl_peripheral_instance* connects a device id (*dev_id*), that is the *id* the chip has in the *microcontroller* table, to a peripheral instance id(*per_in_id*). The *per_in_id* is the id that the peripheral instance has in the *p_peripheral_instance* table. The *p_peripheral_instance* table contains the information that is specific to this instance of the peripheral. A chip can have several instances of the same peripheral. Examples are two or more UART interfaces, several timers and so on. Each peripheral instance therefore has a *peripheral_id* that defines the type of peripheral that is an instance of.
 
-The *p_peripheral* table has one entry for each #type of peripheral#. It contains values that are specific to the peripheral. The other important function of this table is to provide the peripheral id that is then used for tables that describe stuff that a peripheral can have more than one of.
+The *p_peripheral* table has one entry for each #type of peripheral#. It contains values that are specific to the peripheral. The other important function of this table is to provide the *peripheral id* that is then used for tables that describe stuff that a peripheral can have more than one of.
 
 Each peripheral can have memory areas that can be used to exchange data with the peripheral. These memory areas or #address blocks# (Special Function Registers(SFR), ...) are defined in the *p_address_block* table. Each entry in that table has a unique *id* that *id* is matched to the peripheral(*peripheral_id*) by the *pl_address_block* table. The *address_offset* in the *p_address_block* table is an offset to the *base_address* value in the *p_peripheral_instance* table.
 
@@ -56,7 +56,7 @@ Registers have the size of one or more bytes. On 32bit processors most registers
 
 A field can have a limited set of very specific settings. For example different modes. This sort of data is often called an "enum" or enumeration. The *pl_enumeration* table connects the field defined by it's id (*id* in *p_field* and *field_id* in *pl_enumeration*) to the enumeration (*enum_id*). The table *p_enumeration* then defines the properties of the enumeration.
 
-The different values that the enumeration can take are defined in the *p_enumeration_element* table. The elements/values of the enumeration are mapped to the enumeration  by the *pl_enumeration_element* table. Here again the *id* in the *p_enumeration_element* table is identical to the *value_id* in the *pl_enumeration_element* table. And the *enum_id* value in *pl_enumeration_element* is the * id* value in *p_enumeration*.
+The different values that the enumeration can take are defined in the *p_enumeration_element* table. The elements/values of the enumeration are mapped to the enumeration by the *pl_enumeration_element* table. Here again the *id* in the *p_enumeration_element* table is identical to the *value_id* in the *pl_enumeration_element* table. And the *enum_id* value in *pl_enumeration_element* is the * id* value in *p_enumeration*.
 
 == Tables
 
