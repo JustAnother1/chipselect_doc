@@ -21,9 +21,24 @@ The DELETE mode is only available to users that have the delete role.
 | per_id
 
 |Example
-| http://chipselect.org/rest/address_block?per_id=42
+| https://chipselect.org/rest/address_block?per_id=42
 
 |====
+
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 13,
+        "address_offset": "0x0",
+        "size": "0x1000",
+        "mem_usage": "registers",
+        "protection": "n"
+    }
+]
+----
 
 === architecture
 
@@ -36,9 +51,29 @@ The DELETE mode is only available to users that have the delete role.
 | id, name, svd_name
 
 |Example
-| http://chipselect.org/rest/vendor?name=STMicroelectronics
+| https://chipselect.org/rest/architecture?id=42
 
 |====
+
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 42,
+        "name": "ARM Cortex-M4",
+        "alternative": 0,
+        "svd_name": "CM4",
+        "revision": "r1p0",
+        "endian": "little",
+        "hasMPU": 0,
+        "hasFPU": 0,
+        "interrupt_prio_bits": 3,
+        "ARM_Vendor_systick": 0
+    }
+]
+----
 
 === enumeration_element
 
@@ -51,9 +86,31 @@ The DELETE mode is only available to users that have the delete role.
 | enum_id
 
 |Example
-| http://chipselect.org/rest/enumeration_element?enum_id=42
+| https://chipselect.org/rest/enumeration_element?enum_id=42
 
 |====
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 96,
+        "name": "B_0x0",
+        "description": "No ADC stop conversion command ongoing",
+        "value": "0x0",
+        "isDefault": 0
+    },
+    {
+        "id": 97,
+        "name": "B_0x1",
+        "description": "Write 1 to stop the ADC. Read 1 means that an ADSTP command is in progress.",
+        "value": "0x1",
+        "isDefault": 0
+    }
+]
+----
+
 
 === enumeration
 
@@ -66,9 +123,23 @@ The DELETE mode is only available to users that have the delete role.
 | field_id
 
 |Example
-| http://chipselect.org/rest/enumeration?field_id=42
+| https://chipselect.org/rest/enumeration?field_id=42
 
 |====
+
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 98737,
+        "name": "DATA32BSelect",
+        "usage_right": null
+    }
+]
+----
+
 
 === field
 
@@ -81,9 +152,37 @@ The DELETE mode is only available to users that have the delete role.
 | reg_id
 
 |Example
-| http://chipselect.org/rest/field?reg_id=42
+| https://chipselect.org/rest/field?reg_id=42
 
 |====
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 18931389,
+        "name": "SPEED",
+        "description": "Speed Status",
+        "bit_offset": 2,
+        "size_bit": 2,
+        "access": "read-only",
+        "modified_write_values": null,
+        "read_action": null
+    },
+    {
+        "id": 18931390,
+        "name": "LINESTATE",
+        "description": "USB Line State Status",
+        "bit_offset": 6,
+        "size_bit": 2,
+        "access": "read-only",
+        "modified_write_values": null,
+        "read_action": null
+    }
+]
+----
+
 
 === interrupt
 
@@ -96,9 +195,24 @@ The DELETE mode is only available to users that have the delete role.
 | per_id, per_in_id
 
 |Example
-| http://chipselect.org/rest/interrupt?per_in_id=42
+| https://chipselect.org/rest/interrupt?per_in_id=42
 
 |====
+
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 6684,
+        "name": "UART0_IRQ",
+        "description": "",
+        "number": 20
+    }
+]
+----
+
 
 === market_state
 
@@ -111,9 +225,21 @@ The DELETE mode is only available to users that have the delete role.
 | id, name
 
 |Example
-| http://chipselect.org/rest/market_state?id=42
+| https://chipselect.org/rest/market_state?id=42
 
 |====
+
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 6,
+        "name": "Active"
+    }
+]
+----
 
 === microcontroller
 
@@ -126,9 +252,38 @@ The DELETE mode is only available to users that have the delete role.
 | id, name, limit, left_off_id
 
 | Example
-| http://chipselect.org/rest/microcontroller?limit=5&left_off_id=100
+| https://chipselect.org/rest/microcontroller?limit=5&left_off_id=100
 
 |===
+
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 4076,
+        "name": "STM32F407",
+        "CPU_clock_max_MHz": null,
+        "Flash_size_kB": null,
+        "RAM_size_kB": 0,
+        "Supply_Voltage_min_V": null,
+        "Supply_Voltage_max_V": null,
+        "Operating_Temperature_min_degC": null,
+        "Operating_Temperature_max_degC": null,
+        "svd_id": null,
+        "Addressable_unit_bit": 8,
+        "bus_width_bit": 32,
+        "description": null,
+        "architecture_id": 42,
+        "market_state_id": null,
+        "package_id": null,
+        "vendor_id": 1,
+        "RAM_size_byte": null,
+        "RAM_start_address": null
+    }
+]
+----
 
 === package
 
@@ -141,9 +296,21 @@ The DELETE mode is only available to users that have the delete role.
 | id, name
 
 |Example
-| http://chipselect.org/rest/package?id=42
+| https://chipselect.org/rest/package?id=42
 
 |====
+
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 30,
+        "name": "WLCSP 25L DIE 460 P 0.4 MM"
+    }
+]
+----
 
 === peripheral_instance
 
@@ -156,9 +323,37 @@ The DELETE mode is only available to users that have the delete role.
 | dev_id
 
 |Example
-| http://chipselect.org/rest/peripheral_instance?dev_id=42
+| https://chipselect.org/rest/peripheral_instance?dev_id=42
 
 |====
+
+
+.Example Response
+[source,json]
+----
+ [
+    {
+        "id": 32695,
+        "name": "XIP_CTRL",
+        "description": "QSPI flash execute-in-place block",
+        "base_address": "0x14000000",
+        "peripheral_id": 26060,
+        "disable_Condition": "",
+        "dev_id": 4717,
+        "per_in_id": 32695
+    },
+    {
+        "id": 32729,
+        "name": "PIO1",
+        "description": "Programmable IO block",
+        "base_address": "0x50300000",
+        "peripheral_id": 26087,
+        "disable_Condition": "",
+        "dev_id": 4717,
+        "per_in_id": 32729
+    }
+ ]
+----
 
 === peripheral
 
@@ -171,9 +366,21 @@ The DELETE mode is only available to users that have the delete role.
 | id, group_name
 
 |Example
-| http://chipselect.org/rest/peripheral?id=42
+| https://chipselect.org/rest/peripheral?id=42
 
 |====
+
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 421,
+        "group_name": "ADC"
+    }
+]
+----
 
 
 === register
@@ -187,9 +394,50 @@ The DELETE mode is only available to users that have the delete role.
 | per_id
 
 |Example
-| http://chipselect.org/rest/register?per_id=42
+| https://chipselect.org/rest/register?per_id=42
 
 |====
+
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 976782,
+        "name": "CLEAR",
+        "display_name": null,
+        "description": "Clear",
+        "address_offset": "0x8",
+        "size": 8,
+        "access": "write-only",
+        "reset_value": "0x0",
+        "alternate_register": null,
+        "reset_mask": "0xFFFFFFFF",
+        "read_action": null,
+        "modified_write_values": null,
+        "data_type": null,
+        "alternate_group": null
+    },
+    {
+        "id": 976789,
+        "name": "STATUS",
+        "display_name": null,
+        "description": "Status",
+        "address_offset": "0x7",
+        "size": 8,
+        "access": "read-only",
+        "reset_value": "0x0",
+        "alternate_register": null,
+        "reset_mask": "0xFFFFFFFF",
+        "read_action": null,
+        "modified_write_values": null,
+        "data_type": null,
+        "alternate_group": null
+    }
+]
+----
+
 
 === vendor
 
@@ -202,9 +450,21 @@ The DELETE mode is only available to users that have the delete role.
 | id, name
 
 |Example
-| http://chipselect.org/rest/vendor?name=STMicroelectronics
+| https://chipselect.org/rest/vendor?name=STMicroelectronics
 
 |====
 
 
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 1,
+        "name": "STMicroelectronics",
+        "url": "https://st.com/",
+        "alternative": 0
+    }
+]
+----
 
