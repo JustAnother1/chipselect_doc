@@ -183,6 +183,35 @@ The DELETE mode is only available to users that have the delete role.
 ]
 ----
 
+=== flash_bank
+
+[cols="1,1"]
+|===
+| Modes
+| GET, POST, PUT, DELETE
+
+| filter
+| dev_id
+
+|Example
+| https://chipselect.org/rest/flash_bank?per_in_id=42
+
+|====
+
+
+.Example Response
+[source,json]
+----
+[
+    {
+        "id": 5179,
+        "start_address": "0x8000000",
+        "size": "0x10000"
+    }
+]
+----
+
+
 
 === interrupt
 
