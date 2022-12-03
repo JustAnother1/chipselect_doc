@@ -1,0 +1,198 @@
+= Server setup
+:toc:
+
+chipselect.org uses docker. 
+
+
+== requirements
+
+  * several GB free space for the whole chipselect.org database.
+  * a computer that can be used to run docker containers
+
+This description does not describe the setup of HTTPS. It assumes that it sits behind a nginx instance that handles the HTTPS (certificates,..) or is deployed in a local network where HTTPS is not required.
+
+
+== install docker
+
+The process is described here:
+
+https://docs.docker.com/engine/install/
+
+== install chipselect container
+
+  * create a file named "docker-compose.yml" with this content:
+
+----
+version: '3'
+services:
+
+    chipselect:
+        image: nginx:latest
+        restart: always
+        environment:
+            TZ: "Europe/Berlin"
+        ports:
+            - "80:80"
+        volumes:
+            - ./chipselect/nginx:/etc/nginx/conf.d/
+            - ./chipselect/www:/app:ro
+
+    cs_php:
+        build: ./chipselect/
+        restart: always
+        environment:
+            TZ: "Europe/Berlin"
+        volumes:
+            - ./chipselect/www:/app:ro
+
+    cs_mysql:
+        image: mariadb:latest
+        restart: always
+        user: 1000:1000
+        command: mysqld --innodb-buffer-pool-size=6000M --key_buffer_size=10M
+        environment:
+            TZ: "Europe/Berlin"
+            MYSQL_ROOT_PASSWORD: 'mariadb_root_password'
+            MYSQL_USER: 'mariadb_user'
+            MYSQL_PASSWORD: 'mariadb_password'
+            MYSQL_DATABASE: 'microcontrollis'
+        volumes:
+            - ./chipselect/mariadb:/var/lib/mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        restart: always
+        environment:
+            TZ: "Europe/Berlin"
+            PMA_HOST: cs_mysql
+            PMA_USER: root
+            PMA_PASSWORD: 'mariadb_root_password'
+        ports:
+            - "8080:80"
+----
+
+replace "mariadb_root_password", "mariadb_user", "mariadb_password" with values of your choosing.
+
+you can and in a public server should skip the "phpmyadmin" section. That section gives you an easy to use interface to the database on port 8080.
+
+If you dont want to run chipselect on port 80 then change the line "80:80" to the desired port. For port 108 the new line would be "1080:80" as the number after the ":" is the port the nginx in the container uses.
+
+You can also adopt the time zone information to match your location. If you are not in central europe then "TZ: "Europe/Berlin"" might be not for you.
+
+
+  * create a folder "chipselect"
+
+  * in that folder create a file called "Dockerfile" with this content:
+  
+----
+FROM php:fpm
+
+RUN pecl install apfd \
+    && docker-php-ext-enable apfd
+
+RUN docker-php-ext-install pdo pdo_mysql
+
+RUN docker-php-ext-configure opcache --enable-opcache \
+    && docker-php-ext-install opcache
+
+----
+
+  * in the chipselect folder create a folder named "nginx"
+
+  * in that folder create a file named "default.config" with this content:
+  
+----
+error_log /var/log/nginx/error.log debug;
+rewrite_log on;
+proxy_buffering off;
+fastcgi_buffering off;
+
+server {
+    # listen unix:/tmp/chipselect.sock default_server;
+    listen 80 default_server;
+    root /app/public;
+
+    index index.php index.html index.htm;
+
+    rewrite ^/(.*)--(.*).svd$ /get_svd.php?vend=$1&dev=$2 last;
+
+    rewrite ^/rest/(.*)$ /rest/$1.php last;
+
+    location ~ \.php$ {
+        fastcgi_pass cs_php:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;     
+        fastcgi_buffers 8 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_connect_timeout 60;
+        fastcgi_send_timeout 300;
+        fastcgi_read_timeout 300;
+    }
+} 
+
+----
+
+  * in the "chipselect" folder do a "git clone https://github.com/JustAnother1/chipselect_www_php.git"
+
+  * rename the newly created directory "chipselect_www_php" to "www".
+
+  * in the "www" directory create the file "secret.inc" with this content :
+
+----
+<?php
+$db_host = 'cs_mysql';
+$db_user = 'mariadb_user';
+$db_password = 'mariadb_password';
+?>
+----
+
+
+The user name and password must match the values given before.
+
+
+  * create a folder named "mariadb" in the "chipsleect" folder.
+  that folder will contain the database files. If you want to store the complete chipselect database then you will need several gigabytes of storage for that folder.
+  The folder will be populated once the containers start.
+  Make sure that the folder can be written to by docker. A "sudo chmod -c 777 mariadb/" will work, but a little less might also be enough. If that is an security issue depends on your server.
+  
+== start chipselect container
+
+for starting or updating the container this bash script can be used:
+
+----
+#!/bin/bash
+echo "stopping containers..."
+docker compose down --remove-orphans
+echo "update Images..."
+docker pull nginx:latest
+docker pull mariadb:latest
+docker compose build
+echo "restarting container..."
+docker compose up -d
+docker image prune -a --force
+echo "$(date --rfc-3339=date) - Done!"
+----
+
+after running "docker compose up" the chipselect.org web site will be available at your server at the defined port.
+
+But is has no data yet.
+
+== restore chipselect database
+
+To directly access the database we first need to get the ip address of the mariadb container:
+
+----
+#!/bin/bash
+
+host=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -f name=docker-cs_mysql-1 -q))
+
+echo "MariaDB is at $host"
+
+----
+
+We can then use the IP address is an "mysql -h IP-ADDRESS -u USER -pPASSWORD microcontrollis". Everything in UPPERCASE needs to be replaced with the real values. The *.sql files can be piped into this command to restore the database.
+
+You can get the *.sql files for the complete database. Just send a shot mail to info@chipselect.org
+
+Your chuipselect.org instance is now fully operational.
+

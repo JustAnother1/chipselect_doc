@@ -14,19 +14,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | per_id
 
-|Example
+| example
 | https://chipselect.org/rest/address_block?per_id=42
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -50,13 +50,13 @@ The DELETE mode is only available to users that have the delete role.
 | filter
 | id, name, svd_name
 
-|Example
+| example
 | https://chipselect.org/rest/architecture?id=42
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -79,18 +79,18 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | enum_id
 
-|Example
+| example
 | https://chipselect.org/rest/enumeration_element?enum_id=42
 
-|====
+|===
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -116,19 +116,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | field_id
 
-|Example
+| example
 | https://chipselect.org/rest/enumeration?field_id=42
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -145,18 +145,18 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | reg_id
 
-|Example
+| example
 | https://chipselect.org/rest/field?reg_id=42
 
-|====
+|===
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -187,19 +187,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | dev_id
 
-|Example
+| example
 | https://chipselect.org/rest/flash_bank?per_in_id=42
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -217,19 +217,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | per_id, per_in_id
 
-|Example
+| example
 | https://chipselect.org/rest/interrupt?per_in_id=42
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -247,19 +247,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | id, name
 
-|Example
+| example
 | https://chipselect.org/rest/market_state?id=42
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -274,19 +274,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | id, name, limit, left_off_id
 
-| Example
+| example
 | https://chipselect.org/rest/microcontroller?limit=5&left_off_id=100
 
 |===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -318,19 +318,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | id, name
 
-|Example
+| example
 | https://chipselect.org/rest/package?id=42
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -345,19 +345,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | dev_id
 
-|Example
+| example
 | https://chipselect.org/rest/peripheral_instance?dev_id=42
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
  [
@@ -388,19 +388,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | id, group_name
 
-|Example
+| example
 | https://chipselect.org/rest/peripheral?id=42
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -416,19 +416,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | per_id
 
-|Example
+| example
 | https://chipselect.org/rest/register?per_id=42
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
@@ -472,19 +472,19 @@ The DELETE mode is only available to users that have the delete role.
 
 [cols="1,1"]
 |===
-| Modes
+| modes
 | GET, POST, PUT, DELETE
 
 | filter
 | id, name
 
-|Example
+| example
 | https://chipselect.org/rest/vendor?name=STMicroelectronics
 
-|====
+|===
 
 
-.Example Response
+.example response
 [source,json]
 ----
 [
