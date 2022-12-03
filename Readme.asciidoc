@@ -7,6 +7,9 @@ Chipselect provides the information on the following interfaces:
 === Web
 You can use the "Chips by Vendor" and "Chips by Feature" pages to get the information you need.
 
+=== self hosting
+You can setup your own instance of chipselect.org. The link:server_setup.asciidoc[instructions are here] 
+
 === SVD download
 For all chips SVD files can be directly downloaded. They are available at http://chipselect.org/<vendor_name>--<device_name>.svd
 
