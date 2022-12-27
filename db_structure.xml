@@ -161,22 +161,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="2178" y="1321" name="p_enumeration">
-<row name="id" null="1" autoincrement="1">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="pl_enumeration_element" row="enum_id" />
-</row>
-<row name="name" null="1" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>NULL</default></row>
-<row name="usage_right" null="1" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>NULL</default></row>
-<key type="PRIMARY" name="">
-<part>id</part>
-</key>
-</table>
-<table x="2697" y="1323" name="p_enumeration_element">
+<table x="2299" y="1322" name="p_enumeration_element">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -196,10 +181,10 @@
 <part>id</part>
 </key>
 </table>
-<table x="1754" y="1322" name="p_field ">
+<table x="1745" y="1322" name="p_field ">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="pl_enumeration" row="field_id" />
+<default>NULL</default><relation table="pl_field_enum_element" row="field_id" />
 </row>
 <row name="name" null="1" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
@@ -221,6 +206,15 @@
 <default>NULL</default></row>
 <row name="read_action" null="1" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
+<default>NULL</default></row>
+<row name="is_Enum" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="enum_name" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="enum_usage_right" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
@@ -455,20 +449,8 @@
 <part>per_id</part>
 </key>
 </table>
-<table x="1960" y="1323" name="pl_enumeration">
+<table x="2000" y="1321" name="pl_field_enum_element">
 <row name="field_id" null="1" autoincrement="1">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="enum_id" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="p_enumeration" row="id" />
-</row>
-<key type="PRIMARY" name="">
-<part>field_id</part>
-</key>
-</table>
-<table x="2402" y="1322" name="pl_enumeration_element">
-<row name="enum_id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="value_id" null="1" autoincrement="0">
@@ -476,7 +458,7 @@
 <default>NULL</default><relation table="p_enumeration_element" row="id" />
 </row>
 <key type="PRIMARY" name="">
-<part>enum_id</part>
+<part>field_id</part>
 </key>
 </table>
 <table x="1588" y="1322" name="pl_field">
