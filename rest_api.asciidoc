@@ -83,7 +83,7 @@ The DELETE mode is only available to users that have the delete role.
 | GET, POST, PUT, DELETE
 
 | filter
-| enum_id
+| field_id
 
 | example
 | https://chipselect.org/rest/enumeration_element?enum_id=42
@@ -107,35 +107,6 @@ The DELETE mode is only available to users that have the delete role.
         "description": "Write 1 to stop the ADC. Read 1 means that an ADSTP command is in progress.",
         "value": "0x1",
         "isDefault": 0
-    }
-]
-----
-
-
-=== enumeration
-
-[cols="1,1"]
-|===
-| modes
-| GET, POST, PUT, DELETE
-
-| filter
-| field_id
-
-| example
-| https://chipselect.org/rest/enumeration?field_id=42
-
-|===
-
-
-.example response
-[source,json]
-----
-[
-    {
-        "id": 98737,
-        "name": "DATA32BSelect",
-        "usage_right": null
     }
 ]
 ----
@@ -169,6 +140,9 @@ The DELETE mode is only available to users that have the delete role.
         "access": "read-only",
         "modified_write_values": null,
         "read_action": null
+        "is_Enum": null
+         "enum_name": null
+         "enum_usage_right": null
     },
     {
         "id": 18931390,
@@ -179,6 +153,9 @@ The DELETE mode is only available to users that have the delete role.
         "access": "read-only",
         "modified_write_values": null,
         "read_action": null
+        "is_Enum": null
+         "enum_name": null
+         "enum_usage_right": null
     }
 ]
 ----
