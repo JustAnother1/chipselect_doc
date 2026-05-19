@@ -8,6 +8,37 @@ The REST API is available at http://chipselect.org/rest/<ressource>
 The GET mode is available on all resources for everybody. All other modes(POST, PUT, DELETE) are only available to logged in users.
 The DELETE mode is only available to users that have the delete role.
 
+== Example
+
+this python script works and shows the data recorded for the RP2040.
+
+[source,python]
+----
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+import requests
+
+url = 'https://chipselect.org/rest/'
+
+if __name__ == '__main__':
+    params = dict(
+        REQUEST_METHOD='GET',
+        name='RP2040'
+    )
+
+    restUrl = url + 'microcontroller'
+
+    resp = requests.post(url=restUrl, data=params)
+    print('Response: Status code ' + str(resp.status_code))
+    print('Request text: ' + str(resp.text))
+    if 200 == resp.status_code:
+        print('now parsing reply...')
+        data = resp.json()
+        print(str(data))
+    print('Done')
+----
+
 == Resources are
 
 === address_block
@@ -19,9 +50,6 @@ The DELETE mode is only available to users that have the delete role.
 
 | filter
 | per_id
-
-| example
-| https://chipselect.org/rest/address_block?per_id=42
 
 |===
 
@@ -49,9 +77,6 @@ The DELETE mode is only available to users that have the delete role.
 
 | filter
 | id, name, svd_name
-
-| example
-| https://chipselect.org/rest/architecture?id=42
 
 |===
 
@@ -84,9 +109,6 @@ The DELETE mode is only available to users that have the delete role.
 
 | filter
 | field_id
-
-| example
-| https://chipselect.org/rest/enumeration_element?enum_id=42
 
 |===
 
@@ -121,9 +143,6 @@ The DELETE mode is only available to users that have the delete role.
 
 | filter
 | reg_id
-
-| example
-| https://chipselect.org/rest/field?reg_id=42
 
 |===
 
@@ -170,9 +189,6 @@ The DELETE mode is only available to users that have the delete role.
 | filter
 | dev_id
 
-| example
-| https://chipselect.org/rest/flash_bank?per_in_id=42
-
 |===
 
 
@@ -199,9 +215,6 @@ The DELETE mode is only available to users that have the delete role.
 
 | filter
 | per_id, per_in_id
-
-| example
-| https://chipselect.org/rest/interrupt?per_in_id=42
 
 |===
 
@@ -230,9 +243,6 @@ The DELETE mode is only available to users that have the delete role.
 | filter
 | id, name
 
-| example
-| https://chipselect.org/rest/market_state?id=42
-
 |===
 
 
@@ -256,9 +266,6 @@ The DELETE mode is only available to users that have the delete role.
 
 | filter
 | id, name, limit, left_off_id
-
-| example
-| https://chipselect.org/rest/microcontroller?limit=5&left_off_id=100
 
 |===
 
@@ -301,9 +308,6 @@ The DELETE mode is only available to users that have the delete role.
 | filter
 | id, name
 
-| example
-| https://chipselect.org/rest/package?id=42
-
 |===
 
 
@@ -327,9 +331,6 @@ The DELETE mode is only available to users that have the delete role.
 
 | filter
 | dev_id
-
-| example
-| https://chipselect.org/rest/peripheral_instance?dev_id=42
 
 |===
 
@@ -371,9 +372,6 @@ The DELETE mode is only available to users that have the delete role.
 | filter
 | id, group_name
 
-| example
-| https://chipselect.org/rest/peripheral?id=42
-
 |===
 
 
@@ -398,9 +396,6 @@ The DELETE mode is only available to users that have the delete role.
 
 | filter
 | per_id
-
-| example
-| https://chipselect.org/rest/register?per_id=42
 
 |===
 
@@ -454,9 +449,6 @@ The DELETE mode is only available to users that have the delete role.
 
 | filter
 | id, name
-
-| example
-| https://chipselect.org/rest/vendor?name=STMicroelectronics
 
 |===
 
